@@ -1,6 +1,7 @@
-import { useState, FormEvent, FC } from 'react'
+import { useState, useRef, FormEvent } from 'react'
 
-import ThemeSwitcher from './components/themeSwitcher'
+import ThemeSwitcher from './components/ThemeSwitcher'
+import CardDownload from './components/CardDownload'
 
 interface Dev {
   name: string
@@ -13,6 +14,8 @@ interface Dev {
 const App = () => {
 
   const BASE_API_URL = 'https://api.github.com'
+
+  const cardRef = useRef(null)
   const [name, setName] = useState<string>("")
   const [dev, setDev] = useState<Dev>()
 
@@ -37,6 +40,7 @@ const App = () => {
 
   return <div className="flex relative flex-col items-center gap-y-8 p-8 w-full min-h-screen bg-gray-300 dark:bg-gray-900 font-pop transition-colors duration-200">
     <ThemeSwitcher />
+    { dev ? <CardDownload card={cardRef} name={dev.name} /> : '' }
     <div className="flex flex-col items-center gap-y-6">
       <img className="dark:invert h-16" src="/img/github-logo.png" alt="Github Logo" />
       <h1 className="dark:text-white text-5xl font-extrabold">GitDex!</h1>
@@ -48,16 +52,16 @@ const App = () => {
         </button>
       </form>
     </div>
-    { dev ? 
-     <div className='flex flex-col items-center text-center dark:text-white border-2 border-gray-900 dark:border-white lg:w-1/3 sm:w-2/3 w-full p-8 gap-y-4 rounded-xl'>
-      <a target='_blank' href={`https://github.com/${dev.login}`} className='text-3xl cursor-pointer font-bold'>@{dev.login}</a>
-      <img className='rounded-full' src={dev.avatarUrl} alt={`${dev.login} profile picture`} />
-      <p className='text-xl'>{dev.name}</p>
-      <p className='text-lg text-justify mt-2'>{dev.bio}</p>
-      <p className='text-sm text-gray-500'>{dev.location}</p>
-    </div>
-     :
-     ''
+    {dev ? 
+      <div className='flex flex-col items-center text-center dark:text-white border-2 border-gray-900 bg-white dark:bg-gray-900 dark:border-white lg:w-1/3 sm:w-2/3 w-full p-8 gap-y-4 rounded-xl' ref={cardRef}>
+        <a target='_blank' href={`https://github.com/${dev.login}`} className='text-3xl cursor-pointer font-bold'>@{dev.login}</a>
+        <img className='rounded-full border border-black dark:border-transparent' src={dev.avatarUrl} alt={`${dev.login} profile picture`} />
+        <p className='text-xl'>{dev.name}</p>
+        <p className='text-lg text-justify mt-2'>{dev.bio}</p>
+        <p className='text-sm text-gray-500'>{dev.location}</p>
+      </div>
+      :
+      ''
     }
   </div>
 
