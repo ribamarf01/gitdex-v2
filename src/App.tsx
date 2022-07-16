@@ -7,7 +7,6 @@ interface Dev {
   login: string
   bio: string
   avatarUrl: string
-  htmlUrl: string
   location: string
 }
 
@@ -27,7 +26,6 @@ const App = () => {
       login: devData.login,
       avatarUrl: devData.avatar_url,
       bio: devData.bio,
-      htmlUrl: devData.html_url,
       location: devData.location,
       name: devData.name
     }
@@ -37,7 +35,7 @@ const App = () => {
 
   }
 
-  return <div className="flex relative flex-col items-center gap-y-8 p-8 w-full h-screen bg-gray-300 dark:bg-gray-900 font-pop transition-colors duration-200">
+  return <div className="flex relative flex-col items-center gap-y-8 p-8 w-full min-h-screen bg-gray-300 dark:bg-gray-900 font-pop transition-colors duration-200">
     <ThemeSwitcher />
     <div className="flex flex-col items-center gap-y-6">
       <img className="dark:invert h-16" src="/img/github-logo.png" alt="Github Logo" />
@@ -50,13 +48,19 @@ const App = () => {
         </button>
       </form>
     </div>
-    { dev ? <DevCard /> : ''}
+    { dev ? 
+     <div className='flex flex-col items-center text-center dark:text-white border-2 border-gray-900 dark:border-white lg:w-1/3 sm:w-2/3 w-full p-8 gap-y-4 rounded-xl'>
+      <a target='_blank' href={`https://github.com/${dev.login}`} className='text-3xl cursor-pointer font-bold'>@{dev.login}</a>
+      <img className='rounded-full' src={dev.avatarUrl} alt={`${dev.login} profile picture`} />
+      <p className='text-xl'>{dev.name}</p>
+      <p className='text-lg text-justify mt-2'>{dev.bio}</p>
+      <p className='text-sm text-gray-500'>{dev.location}</p>
+    </div>
+     :
+     ''
+    }
   </div>
 
-}
-
-const DevCard = () => {
-  return <div>Card Works</div>
 }
 
 export default App
