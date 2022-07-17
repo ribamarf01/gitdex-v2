@@ -55,7 +55,7 @@ const App = () => {
     {dev ? 
       <div className='flex flex-col items-center text-center dark:text-white border-2 border-gray-900 bg-white dark:bg-gray-900 dark:border-white lg:w-1/3 sm:w-2/3 w-full p-8 gap-y-4 rounded-xl' ref={cardRef}>
         <a target='_blank' href={`https://github.com/${dev.login}`} className='text-3xl cursor-pointer font-bold'>@{dev.login}</a>
-        <img className='rounded-full border border-black dark:border-transparent' src={dev.avatarUrl} alt={`${dev.login} profile picture`} />
+        <img className='rounded-full border border-black dark:border-transparent w-36 h-36' src={dev.avatarUrl} alt={`${dev.login} profile picture`} />
         <p className='text-xl'>{dev.name}</p>
         <p className='text-lg text-justify mt-2'>{dev.bio}</p>
         <p className='text-sm text-gray-500'>{dev.location}</p>
